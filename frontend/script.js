@@ -1,4 +1,4 @@
-const API_URL = "/api/reviews";
+const API_URL = "http://localhost:5000/api/reviews";
 let selectedRating = 0;
 
 /* ---------- STAR RATING ---------- */
@@ -27,15 +27,15 @@ async function addReview() {
     return;
   }
 
-  await fetch(API, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name,
-      rating: selectedRating,
-      comment
-    })
-  });
+ await fetch(API_URL, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    name,
+    rating: selectedRating,
+    comment
+  })
+});
 
   // Reset form
   document.getElementById("name").value = "";
@@ -59,7 +59,7 @@ async function addReview() {
 
 /* ---------- LOAD REVIEWS ---------- */
 async function loadReviews() {
-  const res = await fetch(API);
+  const res = await fetch(API_URL);
   const data = await res.json();
 
   const reviews = document.getElementById("reviews");
@@ -99,12 +99,12 @@ async function deleteReview(id, card) {
   card.style.opacity = "0";
 
   setTimeout(async () => {
-    const res = await fetch(`${API}/${id}`, {
-      method: "DELETE",
-      headers: {
-        "admin-key": adminKey
-      }
-    });
+    const res = await fetch(`${API_URL}/${id}`, {
+  method: "DELETE",
+  headers: {
+    "admin-key": adminKey
+  }
+});
 
     const data = await res.json();
 
